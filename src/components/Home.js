@@ -33,8 +33,14 @@ class Home extends Component {
     //   .catch(error => this.setState({ error }));
 
   }*/
+  fetchData1(e){
+    //console.log('cilcked');
+    const PlanetName=e.target.elements.planetName.value;
+    console.log(this.state.planets);
+    e.preventDefault();
+    
+  }
   fetchData(){
-
     this.setState({
         planets:[]
     })
@@ -59,6 +65,18 @@ class Home extends Component {
    componentDidMount  (){
      this.fetchData();   
 
+  }
+  componentDidUpdate(){
+    if(this.state.planets.length>0 ){
+      const plant=JSON.stringify(this.state.planets);
+      localStorage.setItem("planets",plant);
+    }
+    
+  }
+  componentDidMount(){
+    const jsonData=localStorage.getItem("planets");
+    const plants=JSON.parse(jsonData);
+    this.setState({planets:plants});
   }
  
 
@@ -88,7 +106,7 @@ class Home extends Component {
         </div>
       </nav>
 
-       <Form getplanets={this.getplanets}/>
+       <Form fetchData1={this.fetchData1}/>
 
         {/* <PlanetList data={this.state.planets.data}/>   */}
 
